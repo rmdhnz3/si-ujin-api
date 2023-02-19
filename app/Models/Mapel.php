@@ -12,4 +12,10 @@ class Mapel extends Model
       protected $fillable = [
         'mapel','durasi','kelas_jurusan','gambar','jumlah_soal','waktu_mulai','waktu_akhir'
     ];
+    public function getUpdatedAtColumn() {
+    return null;
+    }
+    public function getCreatedAtColumn() {
+        return null;
+    }
 }

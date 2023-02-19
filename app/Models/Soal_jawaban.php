@@ -12,4 +12,10 @@ class Soal_jawaban extends Model
      protected $fillable =[
         "id_mapel","id_kelas","no_soal","soal","gambar","pilihan_A","pilihan_B","pilihan_C","pilihan_D","pilihan_E","skor_benar","skor_salah"
     ];
+    public function getUpdatedAtColumn() {
+    return null;
+    }
+    public function getCreatedAtColumn() {
+        return null;
+    }
 }

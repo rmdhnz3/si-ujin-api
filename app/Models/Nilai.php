@@ -12,4 +12,10 @@ class Nilai extends Model
      protected $fillable = [ 
         'id_siswa','id_mapel','nilai'
     ];
+    public function getUpdatedAtColumn() {
+    return null;
+    }
+    public function getCreatedAtColumn() {
+        return null;
+    }
 }

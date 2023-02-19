@@ -13,4 +13,11 @@ class Data_guru extends Model
         'nip','nama','guru_mapel'
 
     ];
+
+    public function getUpdatedAtColumn() {
+    return null;
+    }
+    public function getCreatedAtColumn() {
+        return null;
+    }
 }

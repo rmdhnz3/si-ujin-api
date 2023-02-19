@@ -11,4 +11,10 @@ class Siswa extends Model
      protected $fillable = [
         'kelas','absen','nis','nama','jenis_kelamin'
     ];
+    public function getUpdatedAtColumn() {
+    return null;
+    }
+    public function getCreatedAtColumn() {
+        return null;
+    }
 }

@@ -12,4 +12,10 @@ class User_mapel extends Model
       protected $fillable = [
         'id_mapel','id_siswa','status'
     ];
+    public function getUpdatedAtColumn() {
+    return null;
+    }
+    public function getCreatedAtColumn() {
+        return null;
+    }
 }

@@ -12,15 +12,18 @@ class UserMapelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index()
     {
-        //
+        $user_mapel = User_mapel::all();
+        return response()->json([
+            'data'=>$user_mapel
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response
+    public function create()
     {
         //
     }
@@ -28,23 +31,33 @@ class UserMapelController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
-        //
+        $var = User_mapel::create([
+            'id_mapel'=>$request->id_mapel,
+            'id_siswa'=>$request->id_siswa,
+            'status'=>$request->status,
+        ]);
+
+        return response()->json([
+            'message'=>'User mapel created'
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User_mapel $user_mapel): Response
+    public function show(User_mapel $user_mapel)
     {
-        //
+        return response()->json([
+          'data'=>$user_mapel  
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User_mapel $user_mapel): Response
+    public function edit(User_mapel $user_mapel)
     {
         //
     }
@@ -52,16 +65,25 @@ class UserMapelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User_mapel $user_mapel): RedirectResponse
+    public function update(Request $request, User_mapel $user_mapel)
     {
-        //
+        $user_mapel->id_mapel = $request->id_mapel;
+        $user_mapel->id_siswa = $request->id_siswa;
+        $user_mapel->status = $request->status;
+        $user_mapel->save();
+        return response()->json([
+            'message'=>'User Mapel '.$user_mapel->id_mapel.' updated'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User_mapel $user_mapel): RedirectResponse
+    public function destroy(User_mapel $user_mapel)
     {
-        //
+        $user_mapel->delete();
+        return response()->json([
+            'message' => 'User mapel'.$user_mapel->id_mapel.' deleted'
+        ]);
     }
 }

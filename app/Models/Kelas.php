@@ -12,4 +12,10 @@ class Kelas extends Model
       protected $fillable = [
         'kelas','jurusan','jumlah_siswa'
     ];
+    public function getUpdatedAtColumn() {
+    return null;
+    }
+    public function getCreatedAtColumn() {
+        return null;
+    }
 }

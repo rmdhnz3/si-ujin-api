@@ -12,4 +12,10 @@ class Jawaban extends Model
       protected $fillable = [
         'id_soal_jawaban','id_siswa','jawaban'
     ];
+    public function getUpdatedAtColumn() {
+    return null;
+    }
+    public function getCreatedAtColumn() {
+        return null;
+    }
 }

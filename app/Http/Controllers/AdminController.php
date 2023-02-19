@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -20,12 +19,13 @@ class AdminController extends Controller
         ]);
     }
 
+    
     /**
      * Show the form for creating a new resource.
      */
     public function create()
+    
     {
-        
     }
 
     /**
@@ -82,7 +82,7 @@ class AdminController extends Controller
     {
         $admin->delete();
         return response()->json([
-            'message' => 'Admin Deleted'
-        ],204);
+            'message' => 'Admin '.$admin->username.' deleted'
+        ]);
     }
 }

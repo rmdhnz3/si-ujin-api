@@ -12,4 +12,10 @@ class Login extends Model
      protected $fillable = [
         'username','password','is_admin'
     ];
+    public function getUpdatedAtColumn() {
+    return null;
+    }
+    public function getCreatedAtColumn() {
+        return null;
+    }
 }
