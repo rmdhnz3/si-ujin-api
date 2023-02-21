@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 
@@ -20,8 +22,8 @@ class SiswaController extends Controller
      public function index(Request $request)
     {
         $siswa = $this->siswa->query();
-        $siswa->when($request->filled('kelas'), function ($query) use ($request) {
-            return $query->where('kelas', 'LIKE','%' . $request->kelas.'%');
+        $siswa->when($request->filled('kelas_id'), function ($query) use ($request) {
+            return $query->where('kelas_id', 'LIKE','%' . $request->kelas_id.'%');
         });
 
         $data = $siswa->get();
@@ -42,16 +44,16 @@ class SiswaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request,Kelas $kelas)
     {
         Siswa::create([
-            'kelas'=>$request->kelas,
+            'kelas_id'=>$request->kelas_id,
             'absen'=>$request->absen,
             'nis'=>$request->nis,
             'nama'=>$request->nama,
             'jenis_kelamin'=>$request->jenis_kelamin,
         ]);
-
+        
     }
 
     /**
@@ -77,7 +79,7 @@ class SiswaController extends Controller
      */
     public function update(Request $request, Siswa $siswa)
     {
-        $siswa->kelas = $request->kelas;
+        $siswa->kelas_id = $request->kelas_id;
         $siswa->absen = $request->absen;
         $siswa->nis = $request->nis;
         $siswa->nama = $request->nama;

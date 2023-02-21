@@ -1,31 +1,32 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Models\Kelas;
-use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class KelasController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $kelasss = Kelas::all();
+        $admin  = Admin::all();
         return response()->json([
-            'data' => $kelasss
+            'data' => $admin
         ]);
     }
 
+    
     /**
      * Show the form for creating a new resource.
      */
     public function create()
+    
     {
-        //
     }
 
     /**
@@ -33,30 +34,30 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        Kelas::create([
-            'kelas' =>$request->kelas,
-            'jurusan' =>$request->jurusan,
-            'jumlah_siswa'=>0,
+        $admin = Admin::create([
+            'username' => $request->username,
+            'password' => $request->password,
+            'nama_admin'=> $request->nama_admin
         ]);
         return response()->json([
-            'message'=>'Data Created'
+            'data' => $admin
         ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Kelas $kela)
+    public function show(Admin $admin)
     {
         return response()->json([
-            'data' => $kela
+            'data' => $admin
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kelas $kelas)
+    public function edit(Admin $admin)
     {
         //
     }
@@ -64,25 +65,25 @@ class KelasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kelas $kela)
+    public function update(Request $request, Admin $admin)
     {
-        $kela->kelas = $request->kelas;
-        $kela->jurusan = $request->jurusan;
-        $kela->jumlah_siswa= $request->jumlah_siswa;
-        $kela->save();
+        $admin->username = $request->username;
+        $admin->password = $request->password;
+        $admin->nama_admin = $request->nama_admin;
+        $admin->save();
         return response()->json([
-            'message'=>'Data updated'
+            'data' => $admin
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-     public function destroy(Kelas $kela)
+    public function destroy(Admin $admin)
     {
-        $kela->delete();
+        $admin->delete();
         return response()->json([
-            'message'=>'Class Deleted'
+            'message' => 'Admin '.$admin->username.' deleted'
         ]);
     }
 }
