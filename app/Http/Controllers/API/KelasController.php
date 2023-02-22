@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Models\Kelas;
-use App\Models\Siswa;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 
 class KelasController extends Controller
 {
@@ -66,7 +66,7 @@ class KelasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kelas $kela,Siswa $siswa)
+    public function update(Request $request, Kelas $kela)
     {
         $kela->kelas = $request->kelas;
         $kela->jurusan = $request->jurusan;

@@ -53,6 +53,9 @@ class SiswaController extends Controller
             'nama'=>$request->nama,
             'jenis_kelamin'=>$request->jenis_kelamin,
         ]);
+        return response()->json([
+            'message'=>'Siswa created'
+        ]);
         
     }
 

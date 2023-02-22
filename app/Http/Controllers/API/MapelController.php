@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Models\Mapel;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 
 class MapelController extends Controller
 {
@@ -14,12 +15,12 @@ class MapelController extends Controller
      */
     public function index()
     {
-        $mapel = Mapel::all();
+        $mapel = Mapel::All();
         return response()->json([
             'data'=>$mapel
         ]);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
