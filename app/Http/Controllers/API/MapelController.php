@@ -13,9 +13,15 @@ class MapelController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
+
     public function index()
     {
-        $mapel = Mapel::All();
+        
+       $mapel = Mapel::query()
+            ->with(['guru'])
+            ->withCount(['jumlah_soal'])
+            ->get();
         return response()->json([
             'data'=>$mapel
         ]);
@@ -35,12 +41,12 @@ class MapelController extends Controller
     public function store(Request $request)
     {
         $mapel = Mapel::create([
+            'id_guru'=>$request->id_guru,
             'mapel'=>$request->mapel,
             'durasi'=>$request->durasi,
             'kelas_jurusan'=>$request->kelas_jurusan,
             'gambar'=>$request->gambar,
             'jumlah_soal'=>$request->jumlah_soal,
-            'waktu_mulai'=>$request->waktu_mulai,
             'waktu_akhir'=>$request->waktu_akhir,
         ]);
         return response()->json([
@@ -71,12 +77,12 @@ class MapelController extends Controller
      */
     public function update(Request $request, Mapel $mapel)
     {
-        $mapel -> mapel = $request->mapel;
+        $mapel -> id_guru = $request->id_guru;
+        $mapel -> mapel = $request->mapel; 
         $mapel -> durasi = $request->durasi;
         $mapel -> kelas_jurusan = $request->kelas_jurusan;
         $mapel -> gambar = $request->gambar;
         $mapel -> jumlah_soal = $request->jumlah_soal;
-        $mapel -> waktu_mulai = $request->waktu_mulai;
         $mapel -> waktu_akhir = $request->waktu_akhir;
         $mapel->save();
         return response()->json([

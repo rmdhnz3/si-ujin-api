@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('mapels', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_guru');
             $table->string('mapel');
-            $table->integer('durasi');
+            $table->string('durasi');
             $table->string('kelas_jurusan');
             $table->string('gambar');
             $table->integer('jumlah_soal');
-            $table->dateTime('waktu_mulai');
             $table->dateTime('waktu_akhir');
         });
     }

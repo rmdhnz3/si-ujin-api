@@ -1,17 +1,7 @@
 <?php
 
-use App\Http\Controllers\API\AdminController;
-use App\Http\Controllers\API\DataGuruController;
-use App\Http\Controllers\API\JawabanController;
-use App\Http\Controllers\API\KelasController;
-use App\Http\Controllers\API\MapelController;
-use App\Http\Controllers\API\NilaiController;
-use App\Http\Controllers\API\SiswaController;
-use App\Http\Controllers\API\SoalJawabanController;
-use App\Http\Controllers\API\UserMapelController;
-use Illuminate\Http\Request;
+use App\Enums\RoleEnum;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,18 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
+    Route::post('login', 'LoginController')->name('login');
 });
 
-// Route::middleware(['API','cors'])->group(function(){
-    Route::APIResource('admin',AdminController::class);
-    Route::APIResource('data_guru',DataGuruController::class);
-    Route::APIResource('jawaban',JawabanController::class);
-    Route::APIResource('kelas',KelasController::class);
-    Route::APIResource('mapel',MapelController::class);
+// Route::group(['middleware' => ['auth:sanctum']], function () {
+//     Route::post('logout', 'LogoutController')->name('logout');
+
+    Route::APIResource('admin', 'AdminController');
+    Route::APIResource('mapel', MapelController::class);
     Route::APIResource('nilai',NilaiController::class);
     Route::APIResource('siswa',SiswaController::class);
     Route::APIResource('soal_jawaban',SoalJawabanController::class);
     Route::APIResource('user_mapel',UserMapelController::class);
+// });
+
+// Route::group(['middleware' => ['auth:sanctum', 'role:' . RoleEnum::ADMINISTRATOR->value]], function () {
+    Route::APIResource('kelas',KelasController::class);
+    Route::APIResource('jawaban',JawabanController::class);
+// });
+
+// Route::group(['middleware' => ['auth:sanctum', 'role:' . RoleEnum::GURU->value]], function () {
+    Route::APIResource('data_guru',DataGuruController::class);
 // });

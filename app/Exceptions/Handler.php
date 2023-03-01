@@ -2,11 +2,18 @@
 
 namespace App\Exceptions;
 
+use Exception;
+use Flugg\Responder\Exceptions\ConvertsExceptions;
+use Flugg\Responder\Exceptions\Http\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use ConvertsExceptions;
+
     /**
      * A list of exception types with their corresponding custom log levels.
      *
@@ -38,11 +45,33 @@ class Handler extends ExceptionHandler
 
     /**
      * Register the exception handling callbacks for the application.
+     *
+     * @return void
      */
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * @param $request
+     * @param  Exception|Throwable  $e
+     * @return Response|JsonResponse|\Symfony\Component\HttpFoundation\Response
+     *
+     * @throws Throwable
+     */
+    public function render($request, Exception|Throwable $e): Response|JsonResponse|\Symfony\Component\HttpFoundation\Response
+    {
+        if ($request->wantsJson() || $request->is('api/*')) {
+
+            $this->convertDefaultException($e);
+
+            if ($e instanceof HttpException) {
+                return $this->renderResponse($e);
+            }
+        }
+        return parent::render($request, $e);
     }
 }

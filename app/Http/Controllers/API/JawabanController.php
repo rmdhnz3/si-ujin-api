@@ -15,11 +15,15 @@ class JawabanController extends Controller
      */
     public function index()
     {
-        $jawaban = Jawaban::all();
+        $jawaban = Jawaban::query()
+                ->with(['soljab'])
+                ->get();
         return response()->json([
             'data'=>$jawaban
         ]);
     }
+
+    
 
     /**
      * Show the form for creating a new resource.

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\QueryException;
+use App\Http\Requests\KelasStoreRequest;
 
 class KelasController extends Controller
 {
@@ -34,12 +36,9 @@ class KelasController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(KelasStoreRequest $request)
     {
-        Kelas::create([
-            'kelas' =>$request->kelas,
-            'jurusan' =>$request->jurusan,
-        ]);
+        Kelas::create($request->validated());
         return response()->json([
             'message'=>'Data Created'
         ]);

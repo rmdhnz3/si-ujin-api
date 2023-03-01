@@ -13,9 +13,23 @@ class SoalJawabanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    private soal_jawaban $soal_jawaban;
+    public function __construct()
     {
-        $data = Soal_jawaban::all();
+        $this->soal_jawaban = new Soal_jawaban();
+    }
+
+    public function index(Request $request)
+    {
+        $soljab = $this->soal_jawaban->query()
+        ->orderBy('no_soal','ASC')
+        ->with(['mapel']);
+        $soljab->when($request->filled('mapel'), function ($query) use ($request){
+        $query->whereHas('mapel', function ($query) use ($request){
+                return $query->where('mapel','LIKE','%'.$request->mapel.'%');
+        });
+        });
+        $data = $soljab->get();
         return response()->json([
             'data'=>$data
         ]);
@@ -34,22 +48,35 @@ class SoalJawabanController extends Controller
      */
     public function store(Request $request)
     {
+        $rawsoal = $request->soal;
+        $rawjawabana = $request->pilihan_A;
+        $rawjawabanb = $request->pilihan_B;
+        $rawjawabanc = $request->pilihan_C;
+        $rawjawaband = $request->pilihan_D;
+        $rawjawabane = $request->pilihan_E;
+        $soalfix = nl2br($rawsoal);
+        $jawabana = nl2br($rawjawabana);
+        $jawabanb = nl2br($rawjawabanb);
+        $jawabanc = nl2br($rawjawabanc);
+        $jawaband = nl2br($rawjawaband);
+        $jawabane = nl2br($rawjawabane);
         $soal = Soal_jawaban::create([
             'id_mapel'=>$request->id_mapel,
             'id_kelas'=>$request->id_kelas,
             'no_soal'=>$request->no_soal,
-            'soal'=>$request->soal,
+            'soal'=>$soalfix,
             'gambar'=>$request->gambar,
-            'pilihan_A'=>$request->pilihan_A,
-            'pilihan_B'=>$request->pilihan_B,
-            'pilihan_C'=>$request->pilihan_C,
-            'pilihan_D'=>$request->pilihan_D,
-            'pilihan_E'=>$request->pilihan_E,
+            'pilihan_A'=>$jawabana,
+            'pilihan_B'=>$jawabanb,
+            'pilihan_C'=>$jawabanc,
+            'pilihan_D'=>$jawaband,
+            'pilihan_E'=>$jawabane,
+            'jawaban_benar'=>$request->jawaban_benar,
             'skor_benar'=>$request->skor_benar,
             'skor_salah'=>$request->skor_salah,
         ]);
-        return response()->jsonn([
-            'message'=>'Soal '.$soal->no_soal.'Created'
+        return response()->json([
+            'message'=>'Soal '.$soal->no_soal.' Created',
         ]);
     }
 
@@ -86,6 +113,7 @@ class SoalJawabanController extends Controller
         $soal_jawaban->pilihan_C = $request->pilihan_C;
         $soal_jawaban->pilihan_D = $request->pilihan_D;
         $soal_jawaban->pilihan_E = $request->pilihan_E;
+        $soal_jawaban->jawaban_benar = $request->jawaban_benar;
         $soal_jawaban->skor_benar = $request->skor_benar;
         $soal_jawaban->skor_salah = $request->skor_salah;
         $soal_jawaban->save();
