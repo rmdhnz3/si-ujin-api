@@ -15,12 +15,12 @@ class KelasStoreRequest extends FormRequest
     {
         return [
             'kelas' => [
-                'unique:kelas,kelas',
+                'required',
                 'max:255',
-                'min:3',
+                'min:1',
             ],
             'jurusan' => [
-                'required',
+                'unique:kelas,jurusan',
                 'max:255',
                 'min:3',
             ],
@@ -32,7 +32,7 @@ class KelasStoreRequest extends FormRequest
         return [
             'kelas.required' => 'Kelas harus diisi',
             'kelas.max' => 'Kelas tidak boleh lebih dari 255 karakter',
-            'kelas.min' => 'Kelas minimal 3 karakter',
+            'kelas.min' => 'Kelas minimal 1 karakter',
             'jurusan.required' => 'Jurusan harus diisi',
             'jurusan.max' => 'Jurusan tidak boleh lebih dari 255 karakter',
             'jurusan.min' => 'Jurusan minimal 3 karakter',

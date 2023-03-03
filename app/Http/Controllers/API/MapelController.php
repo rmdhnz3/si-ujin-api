@@ -20,6 +20,7 @@ class MapelController extends Controller
         
        $mapel = Mapel::query()
             ->with(['guru'])
+            ->with(['kelas'])
             ->withCount(['jumlah_soal'])
             ->get();
         return response()->json([
@@ -42,9 +43,9 @@ class MapelController extends Controller
     {
         $mapel = Mapel::create([
             'id_guru'=>$request->id_guru,
+            'id_kelas'=>$request->id_kelas,
             'mapel'=>$request->mapel,
             'durasi'=>$request->durasi,
-            'kelas_jurusan'=>$request->kelas_jurusan,
             'gambar'=>$request->gambar,
             'jumlah_soal'=>$request->jumlah_soal,
             'waktu_akhir'=>$request->waktu_akhir,
@@ -78,9 +79,9 @@ class MapelController extends Controller
     public function update(Request $request, Mapel $mapel)
     {
         $mapel -> id_guru = $request->id_guru;
+        $mapel -> id_kelas = $request->id_kelas;
         $mapel -> mapel = $request->mapel; 
         $mapel -> durasi = $request->durasi;
-        $mapel -> kelas_jurusan = $request->kelas_jurusan;
         $mapel -> gambar = $request->gambar;
         $mapel -> jumlah_soal = $request->jumlah_soal;
         $mapel -> waktu_akhir = $request->waktu_akhir;

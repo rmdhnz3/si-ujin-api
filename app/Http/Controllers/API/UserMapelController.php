@@ -10,14 +10,36 @@ use Illuminate\Http\RedirectResponse;
 
 class UserMapelController extends Controller
 {
+
+
+    private user_mapel $user_mapel;
+
+    public function __construct()
+    {
+        $this->user_mapel= new User_mapel();
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user_mapel = User_mapel::all();
+        $user_mapel = $this->user_mapel->query()
+        ->where('status',1)
+        ->with(['mapel'])
+        ->with(['guru'])
+        ->with(['siswa']);
+        $user_mapel->when($request->filled('id_siswa'), function ($query) use ($request) {
+            return $query->where('id_siswa', 'LIKE','%' . $request->id_siswa.'%');
+        });
+        $data = $user_mapel->get();
+
+        // $data = [];
+        // foreach ($user_mapel as $usmap) {
+        //      $data += [$usmap];
+        // }
+
         return response()->json([
-            'data'=>$user_mapel
+            'data'=>$data
         ]);
     }
 
@@ -34,8 +56,9 @@ class UserMapelController extends Controller
      */
     public function store(Request $request)
     {
-        $var = User_mapel::create([
+         User_mapel::create([
             'id_mapel'=>$request->id_mapel,
+            'id_guru'=>$request->id_guru,
             'id_siswa'=>$request->id_siswa,
             'status'=>$request->status,
         ]);
@@ -69,6 +92,7 @@ class UserMapelController extends Controller
     public function update(Request $request, User_mapel $user_mapel)
     {
         $user_mapel->id_mapel = $request->id_mapel;
+        $user_mapel->id_guru = $request->id_guru;
         $user_mapel->id_siswa = $request->id_siswa;
         $user_mapel->status = $request->status;
         $user_mapel->save();

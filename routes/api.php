@@ -1,6 +1,9 @@
 <?php
 
 use App\Enums\RoleEnum;
+use App\Http\Controllers\API\DataGuruController;
+use App\Http\Controllers\API\SiswaController;
+use App\Models\Data_guru;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------

@@ -15,9 +15,15 @@ class KelasController extends Controller
     /**
      * Display a listing of the resource.
      */
+    private kelas $kelas;
+    public function __construct()
+    {
+        $this->kelas = new Kelas();
+    }
     public function index()
     {
-        $kelasss = Kelas::query()
+        $kelasss = $this->kelas->query()
+            ->orderBy('jurusan','ASC')
             ->withCount('siswa')
             ->get();
         return response()->json([

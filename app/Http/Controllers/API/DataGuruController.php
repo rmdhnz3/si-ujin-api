@@ -13,17 +13,45 @@ class DataGuruController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+      private data_guru $data_guru;
+    
+    public function __construct()
     {
-        $data_guru = Data_guru::All();
+        $this->data_guru = new Data_guru();
+    }
+    
+    public function index(Request $request)
+    {
+        $query = $request->input('query');
+        $data_guru = $this->data_guru->query()
+                            ->where('nip','LIKE','%'.$query.'%')
+                            ->orWhere('nama','LIKE','%'.$query.'%')
+                            ->orWhere('guru_mapel','LIKE','%'.$query.'%')
+                            ->get();
         return response()->json([
             'data'=>$data_guru
         ]);
     }
 
+    public function search (Request $request)
+    {
+        $query = $request->input('query');
+        $data_guru = $this->data_guru->query()
+                            ->where('nip','LIKE','%'.$query.'%')
+                            ->orWhere('nama','LIKE','%'.$query.'%')
+                            ->orWhere('guru_mapel','LIKE','%'.$query.'%')
+                            ->get();
+
+        return response()->json([
+            'data' => $data_guru
+        ]);
+                        }
     /**
      * Show the form for creating a new resource.
      */
+
+
     public function create()
     {
         //

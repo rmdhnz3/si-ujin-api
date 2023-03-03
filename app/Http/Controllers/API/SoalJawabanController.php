@@ -23,6 +23,7 @@ class SoalJawabanController extends Controller
     {
         $soljab = $this->soal_jawaban->query()
         ->orderBy('no_soal','ASC')
+        ->with(['kelas'])
         ->with(['mapel']);
         $soljab->when($request->filled('mapel'), function ($query) use ($request){
         $query->whereHas('mapel', function ($query) use ($request){
@@ -72,8 +73,6 @@ class SoalJawabanController extends Controller
             'pilihan_D'=>$jawaband,
             'pilihan_E'=>$jawabane,
             'jawaban_benar'=>$request->jawaban_benar,
-            'skor_benar'=>$request->skor_benar,
-            'skor_salah'=>$request->skor_salah,
         ]);
         return response()->json([
             'message'=>'Soal '.$soal->no_soal.' Created',
@@ -114,8 +113,6 @@ class SoalJawabanController extends Controller
         $soal_jawaban->pilihan_D = $request->pilihan_D;
         $soal_jawaban->pilihan_E = $request->pilihan_E;
         $soal_jawaban->jawaban_benar = $request->jawaban_benar;
-        $soal_jawaban->skor_benar = $request->skor_benar;
-        $soal_jawaban->skor_salah = $request->skor_salah;
         $soal_jawaban->save();
         return response()->json([
             'message'=>'Soal '.$soal_jawaban->no_soal.' updated'

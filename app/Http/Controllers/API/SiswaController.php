@@ -21,9 +21,16 @@ class SiswaController extends Controller
      */
      public function index(Request $request)
     {
-        $siswa = $this->siswa->query();
-        $siswa->when($request->filled('kelas_id'), function ($query) use ($request) {
-            return $query->where('kelas_id', 'LIKE','%' . $request->kelas_id.'%');
+        // $query = $request->input('query');
+        // $query = $request->input('kelas_id');
+        $siswa = $this->siswa->query()
+        ->with(['kelas'])
+        // ->where('absen','LIKE','%'.$query.'%')
+        // ->orWhere('nis','LIKE','%'.$query.'%')
+        // ->orWhere('nama','LIKE','%'.$query.'%')
+        // ->orWhere('jenis_kelamin','LIKE','%'.$query.'%')
+        ->when($request->filled('kelas_id'), function ($query) use ($request) {
+            return $query->orWhere('kelas_id', 'LIKE','%' . $request->kelas_id.'%');
         });
 
         $data = $siswa->get();

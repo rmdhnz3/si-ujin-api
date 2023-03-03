@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-
+ 
 class Mapel extends Model
 {
     use HasFactory;
 
       protected $fillable = [
-        'id_guru','mapel','durasi','kelas_jurusan','gambar','jumlah_soal','waktu_akhir'
+        'id_guru','id_kelas','mapel','durasi','gambar','jumlah_soal','waktu_akhir'
     ];
     public function getUpdatedAtColumn() {
     return null;
@@ -35,5 +35,9 @@ class Mapel extends Model
     public function guru(): BelongsTo 
     {
         return $this->belongsTo(Data_guru::class, 'id_guru');
+    }
+    public function kelas():BelongsTo
+    {
+        return $this -> BelongsTo(Kelas::class,'id_kelas');
     }
 }

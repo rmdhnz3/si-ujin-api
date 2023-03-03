@@ -23,4 +23,8 @@ class Siswa extends Model
     {
         return $this->belongsTo(Kelas::class, 'kelas_id');
     }
+    public function siswa(): BelongsTo
+    {
+        return $this->belongsTo(User_mapel::class, 'kelas_id');
+    }
 }
