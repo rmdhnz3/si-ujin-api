@@ -24,7 +24,6 @@ class UserMapelController extends Controller
     public function index(Request $request)
     {
         $user_mapel = $this->user_mapel->query()
-        ->where('status',1)
         ->with(['mapel'])
         ->with(['guru'])
         ->with(['siswa']);
@@ -110,5 +109,8 @@ class UserMapelController extends Controller
         return response()->json([
             'message' => 'User mapel'.$user_mapel->id_mapel.' deleted'
         ]);
+    }
+    public function setStatus(Request $request ){
+
     }
 }

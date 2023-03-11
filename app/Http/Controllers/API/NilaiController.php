@@ -13,11 +13,23 @@ class NilaiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    private nilai $nilai;
+    public function __construct()
     {
-        $nilai = Nilai::all();
+        $this->nilai = new Nilai();
+    }
+    public function index(Request $request)
+    {
+        $nilai = $this->nilai->query()
+        ->with(['mapel'])
+        ->with(['siswa'])
+        ->when($request->filled('id_siswa'), function ($query) use ($request) {
+            return $query->where('id_siswa', 'LIKE','%' . $request->id_siswa.'%');
+        });
+
+        $data = $nilai->get();
         return response()->json([
-            'data'=>$nilai
+            'data'=>$data
         ]);
     }
 
@@ -34,7 +46,7 @@ class NilaiController extends Controller
      */
     public function store(Request $request)
     {
-        $nilai = Nilai::create([
+        Nilai::create([
             'id_siswa'=>$request->id_siswa,
             'id_mapel'=>$request->id_mapel,
             'nilai'=>$request->nilai,

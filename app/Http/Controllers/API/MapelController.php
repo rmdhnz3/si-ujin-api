@@ -47,7 +47,6 @@ class MapelController extends Controller
             'mapel'=>$request->mapel,
             'durasi'=>$request->durasi,
             'gambar'=>$request->gambar,
-            'jumlah_soal'=>$request->jumlah_soal,
             'waktu_akhir'=>$request->waktu_akhir,
         ]);
         return response()->json([
@@ -83,7 +82,6 @@ class MapelController extends Controller
         $mapel -> mapel = $request->mapel; 
         $mapel -> durasi = $request->durasi;
         $mapel -> gambar = $request->gambar;
-        $mapel -> jumlah_soal = $request->jumlah_soal;
         $mapel -> waktu_akhir = $request->waktu_akhir;
         $mapel->save();
         return response()->json([

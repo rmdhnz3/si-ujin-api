@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User_mapel extends Model
 {
@@ -14,6 +15,7 @@ class User_mapel extends Model
       protected $fillable = [
         'id_mapel','id_guru','id_siswa','status'
     ];
+
     public function getUpdatedAtColumn() {
     return null;
     }
